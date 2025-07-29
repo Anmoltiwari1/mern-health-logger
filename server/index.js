@@ -4,6 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 const authRoutes=require("./routes/auth");
 const HealthRoutes=require("./routes/Healthroute");
+const dashboard=require("./routes/dashboard");
+const GoalRoutes=require("./routes/goalroutes");
 
 const app = express();
 
@@ -15,7 +17,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth",authRoutes);
-app.use("/api/dashboard",HealthRoutes);
+app.use("/api/Home",HealthRoutes);
+app.use("/api/dashboard",dashboard);
+app.use("/api/goal",GoalRoutes);
 
 
 
