@@ -1,3 +1,4 @@
+const API_BASE = import.meta.env.VITE_API_URL;
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -44,7 +45,7 @@ const Dashboard = () => {
   const fetchGoals = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/goal", {
+      const res = await axios.get(`${API_BASE}/goal`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setGoals(res.data.goals);
@@ -58,7 +59,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       const today = new Date().toISOString().split("T")[0];
       const res = await axios.get(
-        `http://localhost:5000/api/healthlog/daily/${today}`,
+        `${API_BASE}/healthlog/daily/${today}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -72,7 +73,7 @@ const Dashboard = () => {
   const fetchLogHistory = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/dashboard/all", {
+      const res = await axios.get(`${API_BASE}/dashboard/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -102,7 +103,7 @@ const Dashboard = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/dashboard/goals", goalInput, {
+      await axios.post(`${API_BASE}/dashboard/goals`, goalInput, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setGoalInput({ type: "", target: "", unit: "" });
@@ -116,7 +117,7 @@ const Dashboard = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/healthlog", healthInput, {
+      await axios.post(`${API_BASE}/healthlog`, healthInput, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHealthInput({
