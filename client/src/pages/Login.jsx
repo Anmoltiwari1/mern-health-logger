@@ -13,7 +13,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("api/auth/login", formdata);
+      const response = await API.post("/api/auth/login", formdata);
       localStorage.setItem("token", response.data.token);
       alert("Login Successful ✅");
       navigate("/dashboard");
