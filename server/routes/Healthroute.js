@@ -13,13 +13,15 @@ router.post('/',authmiddleware,async (req,res)=>{
 
 
     try {
-        const newlog=new HealthLogs({
-            user:req.user.id,
-            weight,
-            sleep,
-            waterIntake,
-            mood,
-            exercise,
+      const today=new Date();
+        const newlog = new HealthLogs({
+          user: req.user.id,
+          weight,
+          sleep,
+          waterIntake,
+          mood,
+          exercise,
+          date: today,
         });
 
         await newlog.save();
@@ -34,13 +36,21 @@ router.post('/',authmiddleware,async (req,res)=>{
 
 router.get("/daily/:date",authmiddleware,async (req,res)=>{
     const {date}=req.params;
+    const userId = req.user.id;
+
+     const start = new Date(date + "T00:00:00Z");
+     const end = new Date(date + "T23:59:59Z");
+
+     console.log("User requesting log:", userId);
+     console.log("Looking from:", start, "to", end);
+    
 
     try {
         const logs = await HealthLogs.find({
           user: req.user.id,
           date: {
-            $gte: new Date(date + "T00:00:00Z"),
-            $lte: new Date(date + "T23:59:59Z"),
+            $gte: start,
+            $lte: end,
           },
         });
         res.status(201).json({ message: "Date is complied",logs});

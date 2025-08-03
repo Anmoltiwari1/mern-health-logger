@@ -22,9 +22,9 @@ router.post("/", authmiddleware, async (req, res) => {
   }
 });
 
-router.get("/",authmiddleware,async (req,res)=>{
+router.get("/",async (req,res)=>{
     try {
-        const goals = await Goal.find({ user: req.user.id }).sort({
+        const goals = await Goal.find().sort({
           createdAt: -1,
         });
         res.status(200).json({ goals });

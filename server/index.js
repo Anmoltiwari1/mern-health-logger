@@ -8,8 +8,9 @@ const dashboard=require("./routes/dashboard");
 const GoalRoutes=require("./routes/goalroutes");
 
 const app = express();
+require("dotenv").config();
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth",authRoutes);
-app.use("/api/Home",HealthRoutes);
+app.use("/api/healthlog",HealthRoutes);
 app.use("/api/dashboard",dashboard);
 app.use("/api/goal",GoalRoutes);
 
