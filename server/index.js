@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://mern-health-logger-1.onrender.com/api",
+      "https://mern-health-logger-y8mr-git-main-anmols-projects-7a7307f5.vercel.app",
     ],
     credentials: true,
   })
