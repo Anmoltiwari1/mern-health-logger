@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [goals, setGoals] = useState([]);
@@ -26,6 +27,13 @@ const Dashboard = () => {
     mood: "",
     exercise: "",
   });
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   useEffect(() => {
     fetchGoals();
@@ -128,7 +136,13 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-8 md:p-12">
       <div className="max-w-7xl mx-auto space-y-16">
-        <header className="text-center">
+        <header className="text-center relative">
+          <button
+            onClick={handleLogout}
+            className="absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition"
+          >
+            Logout
+          </button>
           <h1 className="text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
             Health Dashboard
           </h1>
@@ -196,19 +210,19 @@ const Dashboard = () => {
                 title="Weight Over Time"
                 data={logHistory}
                 dataKey="weight"
-                fill="#60A5FA" // blue-400
+                fill="#60A5FA"
               />
               <ChartCard
                 title="Water Intake"
                 data={logHistory}
                 dataKey="waterIntake"
-                fill="#34D399" // emerald-400
+                fill="#34D399"
               />
               <ChartCard
                 title="Sleep Duration"
                 data={logHistory}
                 dataKey="sleep"
-                fill="#FBBF24" // amber-400
+                fill="#FBBF24"
                 fullWidth
               />
             </div>
@@ -268,7 +282,10 @@ const Dashboard = () => {
               placeholder="Water Intake (L)"
               value={healthInput.waterIntake}
               onChange={(e) =>
-                setHealthInput({ ...healthInput, waterIntake: e.target.value })
+                setHealthInput({
+                  ...healthInput,
+                  waterIntake: e.target.value,
+                })
               }
             />
             <FormInput
